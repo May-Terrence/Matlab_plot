@@ -11,7 +11,7 @@ addpath(genpath(currentFolder));
 G = 9.788;
 r2d = 180/pi;
 
-% filename = '241219circle.TXT';
+% filename = 'INDIr.TXT';
 % fid = fopen(filename, 'r');
 % data = [];
 % errData = {};
@@ -32,13 +32,15 @@ r2d = 180/pi;
 % pidYaw=(data(:,19)-data(20,16))/1000*r2d;
 % data = data(101:650,:);%INDIr
 % data = data(1:550,:);%INDI
+
+
 % showAttitude(data,pidRol,pidPit,pidYaw);
 
 % data = data(111:310,:);
-% pidRol=(data(:,17)-data(20,14))/1000*r2d;
+% pidRol=(data(:,17)-data(20,14))/1000*r2d;%F92
 % pidPit=(data(:,18)-data(20,15))/1000*r2d;
 % pidYaw=(data(:,19)-data(20,16))/1000*r2d;
-% showAllocationError(data,pidRol,pidPit,pidYaw);
+% showAllocationError(data,pidRol,pidPit,pidYaw);%F91
 
 % data = data(2158:4875,:);
 roll_command = data(:,14)/1000*r2d;%角度
@@ -61,96 +63,96 @@ yCom = data(:,9)/1000;
 yFb = data(:,12)/1000;
 zCom = data(:,10)/1000;
 zFb = data(:,13)/1000;
-
-omega_raw_0 = data(:,23)/1000*r2d;
-omega_raw_1 = data(:,24)/1000*r2d;
-omega_raw_2 = data(:,25)/1000*r2d;
-
-omega_filter_0 = data(:,45)/1000*r2d;
-omega_filter_1 = data(:,46)/1000*r2d;
-omega_filter_2 = data(:,47)/1000*r2d;
-
-angacc_raw_0 = data(:,52)/1000*r2d;
-angacc_raw_1 = data(:,53)/1000*r2d;
-angacc_raw_2 = data(:,54)/1000*r2d;
-
-angacc_filter_0 = data(:,55)/1000*r2d;
-angacc_filter_1 = data(:,56)/1000*r2d;
-angacc_filter_2 = data(:,57)/1000*r2d;
-
-% INDIinputX=data(:,39)/1000*r2d;%ti,tf
-% INDIinputY=data(:,40)/1000*r2d;
-% INDIinputZ=data(:,41)/1000*r2d;
-% FBinputX=data(:,49)/1000*r2d;
-% FBinputY=data(:,50)/1000*r2d;
-% FBinputZ=data(:,51)/1000*r2d;
 % 
-% laserHeight = data(:,52)/1000;%height/velx/vely
-% laserHeightFil = data(:,53)/1000;
-% flowVelx = data(:,54)/1000;
-% flowVely = data(:,55)/1000;
-% flowVelxFil = data(:,56)/1000;
-% flowVelyFil = data(:,57)/1000;
+% omega_raw_0 = data(:,23)/1000*r2d;
+% omega_raw_1 = data(:,24)/1000*r2d;
+% omega_raw_2 = data(:,25)/1000*r2d;
+% 
+% omega_filter_0 = data(:,45)/1000*r2d;
+% omega_filter_1 = data(:,46)/1000*r2d;
+% omega_filter_2 = data(:,47)/1000*r2d;
+% 
+% angacc_raw_0 = data(:,52)/1000*r2d;
+% angacc_raw_1 = data(:,53)/1000*r2d;
+% angacc_raw_2 = data(:,54)/1000*r2d;
+% 
+% angacc_filter_0 = data(:,55)/1000*r2d;
+% angacc_filter_1 = data(:,56)/1000*r2d;
+% angacc_filter_2 = data(:,57)/1000*r2d;
+% 
+% % INDIinputX=data(:,39)/1000*r2d;%ti,tf
+% % INDIinputY=data(:,40)/1000*r2d;
+% % INDIinputZ=data(:,41)/1000*r2d;
+% % FBinputX=data(:,49)/1000*r2d;
+% % FBinputY=data(:,50)/1000*r2d;
+% % FBinputZ=data(:,51)/1000*r2d;
+% % 
+% % laserHeight = data(:,52)/1000;%height/velx/vely
+% % laserHeightFil = data(:,53)/1000;
+% % flowVelx = data(:,54)/1000;
+% % flowVely = data(:,55)/1000;
+% % flowVelxFil = data(:,56)/1000;
+% % flowVelyFil = data(:,57)/1000;
 ti = [];
 for i=1:1:length(data)
 % for i=1:1:7500
     ti(i) = i*0.01; %10s 时间间隔为0.01
 end
 x = ti;
-% Fil = 0;
-% Filt.CNT = 0;
-% Filt.CCR = 40;
-% for j=1:1:length(flowVelx)
-%     [Fil, Filt] = SlideFilt(Fil,flowVelx(j),1,Filt,1);
-%     flowFil(j) = Fil;
-% end
-% flowVelxFil - flowFil'
-
-% figure(1)
-% plot(x,y1,'r--',x,y2,'g--',x,y3,'b',x,y4,'m');
-% hold
-% plot(x,y5,'k',x,y6,'k.',x,y7,'m--')
-
-% legend('control_mode', 'FlightStatus', 'dubins','dis-XY','goalDis','traveledAng','goalAng');
-% plot(x,y8,'r--',x,y9,'g',x,y10,'b');
-% legend('jerk', 'angvel1', 'pitch');
-
-% figure(2)
-% subplot(3,1,1);
-% plot(x,y11,'r',x,y12,'g');
-% title('roll角速度')
-% legend('pqr_command-0', 'pqr-0');
-% subplot(3,1,2);
-% plot(x,y13,'r',x,y14,'g');
-% title('pitch角速度')
-% legend('pqr_command-1', 'pqr-1');
-% subplot(3,1,3);
-% plot(x,y15,'r',x,y16,'g');
-% title('yaw角速度')
-% legend('pqr_command-2', 'pqr-2');
+% % Fil = 0;
+% % Filt.CNT = 0;
+% % Filt.CCR = 40;
+% % for j=1:1:length(flowVelx)
+% %     [Fil, Filt] = SlideFilt(Fil,flowVelx(j),1,Filt,1);
+% %     flowFil(j) = Fil;
+% % end
+% % flowVelxFil - flowFil'
 % 
-fig3 = figure
+% % figure(1)
+% % plot(x,y1,'r--',x,y2,'g--',x,y3,'b',x,y4,'m');
+% % hold
+% % plot(x,y5,'k',x,y6,'k.',x,y7,'m--')
+% 
+% % legend('control_mode', 'FlightStatus', 'dubins','dis-XY','goalDis','traveledAng','goalAng');
+% % plot(x,y8,'r--',x,y9,'g',x,y10,'b');
+% % legend('jerk', 'angvel1', 'pitch');
+% 
+% % figure(2)
+% % subplot(3,1,1);
+% % plot(x,y11,'r',x,y12,'g');
+% % title('roll角速度')
+% % legend('pqr_command-0', 'pqr-0');
+% % subplot(3,1,2);
+% % plot(x,y13,'r',x,y14,'g');
+% % title('pitch角速度')
+% % legend('pqr_command-1', 'pqr-1');
+% % subplot(3,1,3);
+% % plot(x,y15,'r',x,y16,'g');
+% % title('yaw角速度')
+% % legend('pqr_command-2', 'pqr-2');
+% % 
+figure
 subplot(3,1,1);
 plot(x,roll_command,'r',x,roll_feedback,'g');
 % axis([0 30 -13 13]);
 grid on;
 title('roll角度')
-legend('Ref', 'PID');
+legend('Ref', 'Real');
 subplot(3,1,2);
 plot(x,pitch_command,'r',x,pitch_feedback,'g');
 % axis([0 30 -13 13]);
 grid on;
 title('pitch角度')
-legend('Ref', 'PID');
+legend('Ref', 'Real');
 subplot(3,1,3);
 plot(x,yaw_command,'r',x,yaw_feedback, 'g');
 % axis([0 30 -13 13]);
 grid on;
 title('yaw角度')
-legend('Ref', 'PID');
+legend('Ref', 'Real');
 % set(fig3.CurrentAxes, 'FontSize', 7,'FontName','Times New Roman','LabelFontSizeMultiplier', 1,'TitleFontSizeMultiplier',1,'LineWidth',0.5,'Xcolor','black','Ycolor','black','Zcolor','black')
 
-
+% 
 figure(4)
 subplot(3,1,1);
 plot(x,VelxCom,'r',x,VelxFb,'g');
@@ -184,19 +186,19 @@ plot(x,zCom,'r',x,zFb,'g');
 % axis([0 25 -2 2]);
 title('Z位置')
 legend('Z_command', 'Z');
-
-fig3 = figure
+% 
+figure
 plot(xFb,yFb,'r');hold on;
-
-% x0 = -9.6183; 
-% y0 = -9.1746;
-% r = 7.81;  
-% theta = 0:0.01:7;  
-% xCom = x0 + r*cos(theta);  
-% yCom = y0 + r*sin(theta);  
-
+% % 
+% % x0 = -9.6183; 
+% % y0 = -9.1746;
+% % r = 7.81;  
+% % theta = 0:0.01:7;  
+% % xCom = x0 + r*cos(theta);  
+% % yCom = y0 + r*sin(theta);  
+% 
 plot(xCom, yCom, 'b');  
-axis equal
+% axis equal
 % axis([-20 0 -20 0]);
 % figure(6)
 % subplot(3,1,1);
